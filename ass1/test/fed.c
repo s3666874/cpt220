@@ -44,6 +44,7 @@ int main(void)
 	printBook2(&book1);
 
 	/* asdfadf */
+	/* asdfadf */
 
 	return 0;
 }
