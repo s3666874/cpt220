@@ -4,29 +4,72 @@
 #include "time.h"
 #include <limits.h>
 
-char * cleanString(char s[])
+enum cell
 {
-    int i;
+    C_EMPTY,
+    C_RED,
+    C_WHITE,
+    C_INVALID
+};
 
-    i = strlen(s)-1;
-    if ( s[i] == '\n')
-    s[i] = '\0';
-
-    return s;
-}
+/* rename an array or arrays of type enum cell to be a board - note that under
+* the hood it is still an array of ints and will behave accordingly */
+typedef enum cell board[15][15];
 
 int main(void)
 {
-	char player1[21];
+    int x,y,i;
 
-	char *player1_pointer;
+    board gameboard;
 
-    printf("Please enter the name of player 1: ");
-    fgets(cleanString(player1), 20, stdin);
+    gameboard[2][3] = C_RED;
 
-    player1_pointer = &player1[21];
+    /*
+	enum cell token;
 
-    printf("%p\n", player1_pointer);
+    token = C_RED;
+
+    printf("%d\n", token);
+*/
+/*
+    printf("%d\n", gameboard[13][10]);
+    printf("%d\n", gameboard[8][9]);
+*/
+
+    for (x=0; x<15+1; x++)
+    {
+        for (y=0; y<15+1; y++)
+        {
+            if (x == 0 && y == 0)
+            {
+                printf("  |");
+            }
+            else if (x == 0)
+            {
+                (y < 10) ? printf(" %d|", y) : printf("%d|", y);
+            }
+            else if (y == 0)
+            {
+                (x < 10) ? printf(" %d|", x) : printf("%d|", x);
+            }
+            else
+            {
+                /*printf("[%d,%d] |", x,y);*/
+                /*printf("%d,%d|", x-1,y-1);*/
+                
+                printf("[%d,%d]|", x-1,y-1);
+                /*printf("(%d,%d) [%d,%d] %d|", y,x,x-1,y-1,gameboard[x-1][y-1]);*/
+            }
+        }
+        printf("\n");
+
+        for (i=0; i<15+1; i++)
+        {
+            (x == 15) ? printf("===") : printf("---");
+        }
+
+        printf("\n");
+    }
 
     return 0;
 }

@@ -58,6 +58,8 @@ enum input_result init_game(struct game* newgame)
 	struct player *player1_pointer;
 	struct player *player2_pointer;
 
+	int thisToken = getToken();
+
 
 	/* Player 1 */
     printf("Please enter the name of player 1: ");
@@ -65,11 +67,10 @@ enum input_result init_game(struct game* newgame)
 
     strcpy(player1.name, cleanString(player1_name));
 
-    if (getToken() == 1)
-    	player1.token = C_RED;
+    player1.token = (thisToken == 1) ? C_RED : C_WHITE;
 
     player1_pointer = &player1;
-    init_player(player1_pointer, C_RED, newgame, 1);
+    init_player(player1_pointer, player1.token, newgame, 1);
 
 
     /* Player 2 */
@@ -78,23 +79,13 @@ enum input_result init_game(struct game* newgame)
 
     strcpy(player2.name, cleanString(player2_name));
 
-    if (getToken() == 0)
-    	player2.token = C_WHITE;
+    player2.token = (thisToken == 1) ? C_WHITE : C_RED;
 
     player2_pointer = &player2;
-    init_player(player2_pointer, C_WHITE, newgame, 2);
+    init_player(player2_pointer, player2.token, newgame, 2);
 
-
-    if (getToken() == 1)
-    {
-    	newgame->current = player1_pointer;
-    	newgame->other = player2_pointer;
-    }
-    else
-    {
-    	newgame->current = player2_pointer;
-    	newgame->other = player1_pointer;
-    }
+    newgame->current = (thisToken == 1) ? player1_pointer : player2_pointer;
+    newgame->other = (thisToken == 1) ? player2_pointer : player1_pointer;
     
     
 

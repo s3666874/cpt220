@@ -69,31 +69,9 @@ int main(void)
 
     /* play the game */
     if (ret == 1)
-    {
-
         play_game();
 
-        
-
-
-
-/*
-        game theGame;
-        theGame.current = &theGame.players[0];
-        theGame.other = &theGame.players[1];
-
-        strcpy(theGame.players[0].name, cleanString(player1));
-        theGame.players[0].token = C_RED;
-        
-        strcpy(theGame.players[1].name, cleanString(player2));
-        theGame.players[1].token = C_WHITE;   
-
-
-        printf("%s plays first\n\n", cleanString(player1));
-        display_board(curgame.gameboard);
-*/
-    }
-
+    /* quit the game */
     if (ret == 2)
         printf("Thank you for playing\n");
 

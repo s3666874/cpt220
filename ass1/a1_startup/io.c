@@ -81,68 +81,39 @@ void display_board(board gameboard)
     /*printf("%d\n", gameboard[0][0]);*/
 
 
-    int r,c,i;
+    int x,y,i;
 
-    for (r=0; r<BOARDWIDTH+1; r++)
+    for (x=0; x<BOARDWIDTH+1; x++)
     {
-        for (c=0; c<BOARDHEIGHT+1; c++)
+        for (y=0; y<BOARDHEIGHT+1; y++)
         {
-            if (r == 0)
+            if (x == 0 && y == 0)
             {
-                if (c == 0)
-                {
-                    printf("  |");
-                }
-                else
-                {
-                     if (c < 10)
-                    {
-                        /*
-                        if (gameboard[r][c].token == C_RED)
-                        {
-                            printf("%s\n", );
-                        }
-                        */
-                        printf(" %d|", c);
-                    }
-                    else
-                    {
-                        printf("%d|", c);
-                    }
-                }
+                printf("  |");
+            }
+            else if (x == 0)
+            {
+                (y < 10) ? printf(" %d|", y) : printf("%d|", y);
+            }
+            else if (y == 0)
+            {
+                (x < 10) ? printf(" %d|", x) : printf("%d|", x);
             }
             else
             {
-                if (c == 0)
-                {
-                    if (r < 10)
-                    {
-                        printf(" %d|", r);
-                    }
-                    else
-                    {
-                        printf("%d|", r);
-                    }
-                }
-                else
-                {
-                    printf("  |");
-                }
+                /*printf("[%d,%d] |", x,y);*/
+                /*printf("%d,%d|", x-1,y-1);*/
+                /*printf("[%d,%d] [%d,%d] %d|", x,y,x-1,y-1,gameboard[x-1][y-1]);*/
+                /*printf(" %s|", game_tokens[gameboard[x-1][y-1]]);*/
+
+                printf("  |");
             }
         }
-
         printf("\n");
 
-        for (i=0; i<BOARDHEIGHT+1; i++)
+        for (i=0; i<15+1; i++)
         {
-            if (r == 15)
-            {
-                printf("===");
-            }
-            else
-            {
-                printf("---");
-            }
+            (x == 15) ? printf("===") : printf("---");
         }
 
         printf("\n");
