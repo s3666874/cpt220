@@ -43,5 +43,7 @@ int main(void)
 	printf("\n\n");
 	printBook2(&book1);
 
+	/* asdfadf */
+
 	return 0;
 }
