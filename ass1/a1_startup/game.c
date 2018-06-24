@@ -8,11 +8,20 @@
  *****************************************************************************/
 #include "game.h"
 #include "string.h"
+#include "time.h"
 
 /**
  * this file contains the implementation of functions for the management of the
  * game
  **/
+
+int getToken()
+{
+
+    srand((unsigned) time(NULL));
+
+   	return rand()%2;
+}
 
 char * cleanString(char s[])
 {
@@ -55,10 +64,11 @@ enum input_result init_game(struct game* newgame)
     fgets(player1_name, 20, stdin);
 
     strcpy(player1.name, cleanString(player1_name));
-    player1.token = C_RED;
-    
-    player1_pointer = &player1;
 
+    if (getToken() == 1)
+    	player1.token = C_RED;
+
+    player1_pointer = &player1;
     init_player(player1_pointer, C_RED, newgame, 1);
 
 
@@ -67,17 +77,26 @@ enum input_result init_game(struct game* newgame)
     fgets(player2_name, 20, stdin);
 
     strcpy(player2.name, cleanString(player2_name));
-    player2.token = C_WHITE;
+
+    if (getToken() == 0)
+    	player2.token = C_WHITE;
 
     player2_pointer = &player2;
-
     init_player(player2_pointer, C_WHITE, newgame, 2);
 
 
-    /* Update game struct */
-    newgame.players[0]->player1_pointer;
-    newgame.players[1]->player2_pointer;
-	
+    if (getToken() == 1)
+    {
+    	newgame->current = player1_pointer;
+    	newgame->other = player2_pointer;
+    }
+    else
+    {
+    	newgame->current = player2_pointer;
+    	newgame->other = player1_pointer;
+    }
+    
+    
 
 	/* Initialize gameboard 
 	init_board();
@@ -115,7 +134,9 @@ void play_game(void)
         /* init the game struct */
         init_game(&curgame);
 
+        printf("%s plays first.\n\n", curgame.current->name);
 
+        display_board(curgame.gameboard);
 
         
         /*

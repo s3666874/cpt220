@@ -83,11 +83,11 @@ void display_board(board gameboard)
 
     int r,c,i;
 
-    for (r=BOARDWIDTH+1; r>0; r--)
+    for (r=0; r<BOARDWIDTH+1; r++)
     {
         for (c=0; c<BOARDHEIGHT+1; c++)
         {
-            if (r == 16)
+            if (r == 0)
             {
                 if (c == 0)
                 {
@@ -135,7 +135,7 @@ void display_board(board gameboard)
 
         for (i=0; i<BOARDHEIGHT+1; i++)
         {
-            if (r == 1)
+            if (r == 15)
             {
                 printf("===");
             }
