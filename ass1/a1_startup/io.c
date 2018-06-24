@@ -22,7 +22,7 @@
  * the C_INVALID constant
  **/
 const char* game_tokens[NUM_TOKEN_TYPES] = {
-        " ", REDCOLOR "o" RESETCOLOR, WHITECOLOR "o" RESETCOLOR, NULL
+        " ", REDCOLOR "x" RESETCOLOR, WHITECOLOR "o" RESETCOLOR, NULL
 };
 
 /**
@@ -74,3 +74,79 @@ int normal_print(const char* format, ...)
         va_end(argvec);
         return charsprinted;
 }
+
+void display_board(board gameboard)
+{
+
+    /*printf("%d\n", gameboard[0][0]);*/
+
+
+    int r,c,i;
+
+    for (r=BOARDWIDTH+1; r>0; r--)
+    {
+        for (c=0; c<BOARDHEIGHT+1; c++)
+        {
+            if (r == 16)
+            {
+                if (c == 0)
+                {
+                    printf("  |");
+                }
+                else
+                {
+                     if (c < 10)
+                    {
+                        /*
+                        if (gameboard[r][c].token == C_RED)
+                        {
+                            printf("%s\n", );
+                        }
+                        */
+                        printf(" %d|", c);
+                    }
+                    else
+                    {
+                        printf("%d|", c);
+                    }
+                }
+            }
+            else
+            {
+                if (c == 0)
+                {
+                    if (r < 10)
+                    {
+                        printf(" %d|", r);
+                    }
+                    else
+                    {
+                        printf("%d|", r);
+                    }
+                }
+                else
+                {
+                    printf("  |");
+                }
+            }
+        }
+
+        printf("\n");
+
+        for (i=0; i<BOARDHEIGHT+1; i++)
+        {
+            if (r == 1)
+            {
+                printf("===");
+            }
+            else
+            {
+                printf("---");
+            }
+        }
+
+        printf("\n");
+    }
+}
+
+

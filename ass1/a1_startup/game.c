@@ -7,24 +7,99 @@
  * study period 2, 2018.
  *****************************************************************************/
 #include "game.h"
+#include "string.h"
 
 /**
  * this file contains the implementation of functions for the management of the
  * game
  **/
 
+char * cleanString(char s[])
+{
+    int i;
+
+    i = strlen(s)-1;
+    if ( s[i] == '\n')
+    s[i] = '\0';
+
+    return s;
+}
+
+
 /**
- * initialises the game to a starting state. You should select a random token
- * for one player and ensure the second player has a different token. You should
- * call init_player() passing in the address of the player, its token, and a
- * pointer to this game. Finally you should initialise the pointers to each
- * player ensuring that a random player is selected to play the game. You should
- * also ensure the board is coorectly initialised through a call to
- * init_board().
+ * initialises the game to a starting state. 
+ *
+ * You should select a random token for one player and ensure the second player has a different token. 
+ *
+ * You should call init_player() passing in the address of the player, its token, and a pointer to this game. 
+ *
+ * Finally you should initialise the pointers to each player ensuring that a random player is selected to play the game. 
+ *
+ * You should also ensure the board is coorectly initialised through a call to init_board().
  **/
 enum input_result init_game(struct game* newgame)
 {
-        return IR_FAILURE;
+
+	char player1_name[21];
+	char player2_name[21];
+
+	struct player player1;
+	struct player player2;
+
+	struct player *player1_pointer;
+	struct player *player2_pointer;
+
+
+	/* Player 1 */
+    printf("Please enter the name of player 1: ");
+    fgets(player1_name, 20, stdin);
+
+    strcpy(player1.name, cleanString(player1_name));
+    player1.token = C_RED;
+    
+    player1_pointer = &player1;
+
+    init_player(player1_pointer, C_RED, newgame, 1);
+
+
+    /* Player 2 */
+    printf("Please enter the name of player 2: ");
+    fgets(player2_name, 20, stdin);
+
+    strcpy(player2.name, cleanString(player2_name));
+    player2.token = C_WHITE;
+
+    player2_pointer = &player2;
+
+    init_player(player2_pointer, C_WHITE, newgame, 2);
+
+
+    /* Update game struct */
+    newgame.players[0]->player1_pointer;
+    newgame.players[1]->player2_pointer;
+	
+
+	/* Initialize gameboard 
+	init_board();
+
+	display_board(newgame.gameboard);
+*/
+
+	
+/*
+    newgame.current = &newgame.players[0];
+    newgame.other = &newgame.players[1];
+
+    strcpy(newgame.players[0].name, player1);
+    newgame.players[0].token = C_RED;
+    
+    strcpy(newgame.players[1].name, player2);
+    newgame.players[1].token = C_WHITE;
+
+
+    init_board();
+*/
+    return IR_FAILURE;
 }
 
 /**
@@ -36,7 +111,23 @@ void play_game(void)
 {
         /* the game struct that holds the data on the game state */
         struct game curgame;
+
         /* init the game struct */
+        init_game(&curgame);
+
+
+
+        
+        /*
+        curgame.current = &curgame.players[0];
+        curgame.other = &curgame.players[1];
+
+        strcpy(curgame.players[0].name, player1);
+        curgame.players[0].token = C_RED;
+        
+        strcpy(curgame.players[1].name, player2);
+        curgame.players[1].token = C_WHITE;  
+*/
         /* the main game loop */
         /* swap the game pointers */
 }

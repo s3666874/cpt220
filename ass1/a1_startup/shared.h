@@ -6,7 +6,9 @@
  * Startup code provided by Paul Miller for use in "Programming in C",
  * study period 2, 2018.
  *****************************************************************************/
+#include "string.h"
 #include <assert.h>
+
 #ifndef SHARED_H /* include guard for this shared header file - it ensures     \
                     this header is only ever includeda maximum of one time in  \
                     each source file. */
@@ -21,4 +23,5 @@ typedef enum
         FALSE,
         TRUE
 } BOOLEAN;
+
 #endif /* end of include guard for shared.h */

@@ -25,8 +25,25 @@ void printBook2( struct Books *book ) {
    	printf("Book subject : %s\n", book->subject);
 }
 
+
+cell getToken()
+{
+
+    srand((unsigned) time(NULL));
+    
+    if (rand()%2 == 0)
+    {
+   		return C_WHITE; 	
+    }
+
+   return C_RED;
+
+}
+
 int main(void)
 {
+
+	/*
 	struct Books book1;
 
 	book1.book_id = 6495407;
@@ -42,6 +59,13 @@ int main(void)
 
 	printf("\n\n");
 	printBook2(&book1);
+*/
+
+
+	printf("%d\n", getToken());
+
+
+
 
 	/* asdfadf */
 	/* asdfadf */

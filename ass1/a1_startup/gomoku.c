@@ -13,7 +13,7 @@
 
 
 /* Helper function for removing the last newline and adding a NUL character */
-char * cleanString(char s[])
+char * cleanString1(char s[])
 {
     int i;
 
@@ -22,17 +22,6 @@ char * cleanString(char s[])
     s[i] = '\0';
 
     return s;
-}
-
-void read_rest_of_line(void)
-{
-    int ch;
-    /* read each char in the input buffer until we run out of chars to read
-     */
-    while (ch = getc(stdin), ch != '\n' && ch != EOF)
-            ;
-    /* clear the error status on the stdin FILE pointer */
-    clearerr(stdin);
 }
 
 /**
@@ -58,9 +47,6 @@ int main(void)
     char *ptr;
     long ret=0;
 
-    char player1[21];
-    char player2[21];
-
     /* Display the initial welcome menu with options */
     printf("Welcome to Gomoku\n================\n1) play the game\n2) quit\n");
 
@@ -76,7 +62,7 @@ int main(void)
         }
         else
         {
-            ret = strtol(cleanString(str), &ptr, 10);
+            ret = strtol(cleanString1(str), &ptr, 10);
         }
 
     } while (ret != 1 && ret != 2);
@@ -84,14 +70,28 @@ int main(void)
     /* play the game */
     if (ret == 1)
     {
-        printf("Please enter the name of player 1: ");
-        fgets(player1, 20, stdin);
 
-        printf("Please enter the name of player 2: ");
-        fgets(player2, 20, stdin);
+        play_game();
 
-        /* printf("%s will be playing %s\n", cleanString(player1), cleanString(player2)); */
-        init_board();
+        
+
+
+
+/*
+        game theGame;
+        theGame.current = &theGame.players[0];
+        theGame.other = &theGame.players[1];
+
+        strcpy(theGame.players[0].name, cleanString(player1));
+        theGame.players[0].token = C_RED;
+        
+        strcpy(theGame.players[1].name, cleanString(player2));
+        theGame.players[1].token = C_WHITE;   
+
+
+        printf("%s plays first\n\n", cleanString(player1));
+        display_board(curgame.gameboard);
+*/
     }
 
     if (ret == 2)

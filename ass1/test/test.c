@@ -28,14 +28,14 @@ void read_rest_of_line(void)
 
 void printPlayer (struct player player)
 {
-    /*
+    
     printf("Player ID: %d\n", player.id);
     printf("Player Name: %s\n", player.name);
     printf("Player age: %d\n", player.age);
     printf("\n");
-    */
+    
 
-    printf("Player Name: %s\n", player.name);
+    /*printf("Player Name: %s\n", player.name);*/
 }
 
 int getToken()
@@ -82,7 +82,7 @@ int main(void)
     /* play the game */
     if (ret == 1)
     {
-        /*
+        
         printf("Please enter the name of player 1: ");
         fgets(playerName1, 20, stdin);
 
@@ -99,9 +99,9 @@ int main(void)
 
         printPlayer(player1);
         printPlayer(player2);
-        */
+        
 
-        init_board(board);
+        /*init_board(board);*/
 
     }
 

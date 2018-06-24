@@ -15,12 +15,14 @@
     {
         /* the player's name */
         char name[NAMELEN + 1];
-        /* their token type */
-        enum cell token;
+        /* their token type
+        enum cell token; */
         /* a pointer to the current game - this allows us to not have to pass
          * this in as a parameter to functions that already have a pointer to
-         * the player */
-        struct game* curgame;
+         * the player 
+        struct game* curgame;*/
+        int id;
+        int age;
     };
 
 #endif
