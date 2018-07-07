@@ -22,7 +22,27 @@ int main(void)
 
     board gameboard;
 
-    gameboard[2][3] = C_RED;
+    for (x=0; x<15+1; x++)
+    {
+        for (y=0; y<15+1; y++)
+        {
+            gameboard[x-1][y-1] = C_EMPTY;
+        }
+    }
+
+
+    printf("%d\n", gameboard[12][3]);
+    printf("%d\n", gameboard[12][4]);
+    printf("%d\n", gameboard[12][5]);
+    printf("%d\n", gameboard[12][6]);
+    printf("\n");
+    
+    printf("%d\n", gameboard[12][8]);
+    printf("%d\n", gameboard[12][10]);
+    printf("%d\n", gameboard[12][13]);
+    printf("%d\n", gameboard[12][14]);
+    printf("\n");
+
 
     /*
 	enum cell token;
@@ -36,6 +56,7 @@ int main(void)
     printf("%d\n", gameboard[8][9]);
 */
 
+/*
     for (x=0; x<15+1; x++)
     {
         for (y=0; y<15+1; y++)
@@ -54,11 +75,11 @@ int main(void)
             }
             else
             {
-                /*printf("[%d,%d] |", x,y);*/
-                /*printf("%d,%d|", x-1,y-1);*/
+                printf("[%d,%d] |", x,y);
+                printf("%d,%d|", x-1,y-1);
                 
                 printf("[%d,%d]|", x-1,y-1);
-                /*printf("(%d,%d) [%d,%d] %d|", y,x,x-1,y-1,gameboard[x-1][y-1]);*/
+                printf("(%d,%d) [%d,%d] %d|", y,x,x-1,y-1,gameboard[x-1][y-1]);
             }
         }
         printf("\n");
@@ -70,6 +91,7 @@ int main(void)
 
         printf("\n");
     }
+*/
 
     return 0;
 }
