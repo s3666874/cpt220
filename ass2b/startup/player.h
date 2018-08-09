@@ -57,4 +57,6 @@ enum color get_next_available_color();
 
 void free_players(struct player*, int);
 
+void print_players(struct player*, int);
+
 #endif

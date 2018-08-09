@@ -20,3 +20,9 @@ HEADERS=board.h game.h helpers.h io.h tile_list.h player.h rules.h scrabble.h \
 	shared.h word_list.h
 archive:
 	zip ${USER} ${SOURCES} ${HEADERS} Makefile
+
+build: clean
+	gcc -ansi -Wall -pedantic ${SOURCES} -o scrabble 
+
+clean:
+	rm -f *.out scrabble

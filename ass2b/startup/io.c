@@ -253,19 +253,41 @@ BOOLEAN load_scores(const char fname[], struct tile_list* lettermap,
                 return FALSE;
         }
 
+        /*print_tiles(temp, 100);*/
         shuffle_tiles(temp, 100);
+        /*print_tiles(temp, 100);*/
 
-
-        lettermap->tiles = tmp;
+        /* Setting up lettermap */
         lettermap->num_tiles = 0;
         lettermap->total_tiles = 27;
 
-        fulllist->tiles = temp;
+        /* Setting up the fulllist */
         fulllist->num_tiles = 0;
         fulllist->total_tiles = 100;
 
+
+        /**************************** Option 1 - Only one that works ****************************/
+        lettermap->tiles = tmp;
+        fulllist->tiles = temp;
+
+
+        /**************************** Option 2 - We get funny characters ****************************/
+        /*lettermap->tiles = tmp;
+        fulllist->tiles = temp;
+
         free(tmp);
-        free(temp);
+        free(temp);*/
+
+        /**************************** Option 3 - Segmentation fault ****************************/
+        /*memcpy(lettermap->tiles, tmp, 27 * sizeof(struct tile));
+        memcpy(fulllist->tiles, temp, 100 * sizeof(struct tile));
+
+        free(tmp);
+        free(temp);*/
+
+
+        /*print_tiles(fulllist->tiles, 100);*/
+
         return TRUE;
 }
 

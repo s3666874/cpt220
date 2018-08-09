@@ -59,4 +59,6 @@ struct tile new_tile(int, int);
 
 void shuffle_tiles(struct tile [], int);
 
+void print_tiles(struct tile [], int);
+
 #endif

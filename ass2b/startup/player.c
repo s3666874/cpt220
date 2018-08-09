@@ -185,3 +185,21 @@ int player_shuffle_cmp(const struct player* first, const struct player* second)
 {
         return EOF;
 }
+
+void print_players(struct player *players, int num_players)
+{
+		int i;
+
+		printf("\n");
+		
+		for (i=0; i<num_players; i++)
+        {
+                printf("Player %d\n", i+1);
+                printf("%s\n", players[i].name);
+                printf("%d\n", players[i].color);
+                printf("\n");
+        }
+}
+
+
+

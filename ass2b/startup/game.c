@@ -52,9 +52,13 @@ enum input_result init_game(struct game* thegame, struct word_list* dictionary,
                 return IR_FAILURE;
         }
 
+        /*print_tiles(fulllist.tiles, 100);*/
+
         /* assign the tilemap and tiledeck to the current game struct */
         thegame->tilemap = &lettermap;
         thegame->tiledeck = &fulllist;
+
+        /*print_tiles(thegame->tiledeck->tiles, 100);*/
 
         /* grab the number of players from the user */
 		if (get_int_from_keyboard("How many players should play? ", str, 1) == IR_SUCCESS)
@@ -85,8 +89,7 @@ enum input_result init_game(struct game* thegame, struct word_list* dictionary,
  **/
 void play_game(struct word_list* dictionary, const char tilefile[])
 {
-        int i;
-        BOOLEAN isfirst = TRUE;
+        /*BOOLEAN isfirst = TRUE;*/
         struct game thegame;
 
         /* initialise the game */
@@ -106,29 +109,12 @@ void play_game(struct word_list* dictionary, const char tilefile[])
 */
 
         /* print tiles */
-
-        printf("\n");
-
-        for (i=0; i<100; i++)
-        {
-                printf("[%c] ", thegame.tiledeck->tiles[i].letter);
-
-                if (i == 19 || i == 39 || i == 59 || i == 79)
-                        printf("\n");
-
-        }
-        printf("\n");
+        print_tiles(thegame.tiledeck->tiles, thegame.tiledeck->total_tiles);
+        /*print_tiles(thegame.tilemap->tiles, thegame.tilemap->total_tiles);*/
 
         /* print players */
-/*
-        for (i=0; i<thegame.num_players; i++)
-        {
-                printf("Player %d\n", i+1);
-                printf("%s\n", thegame.players[i].name);
-                printf("%d\n", thegame.players[i].color);
-                printf("\n");
-        }
-*/
+        /*print_players(thegame.players, thegame.num_players);*/
+
         /* finalise the scores and print them */
 
 

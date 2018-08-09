@@ -44,4 +44,21 @@ void shuffle_tiles(struct tile tiles[], int total_tiles)
 		}
 }
 
+void print_tiles(struct tile tiles[], int total_tiles)
+{
+		int i;
+
+		for (i=0; i<total_tiles; i++)
+		{
+				printf("[%c] ", tiles[i].letter);
+
+                if (total_tiles == 100 && (i == 19 || i == 39 || i == 59 || i == 79))
+                        printf("\n");
+		}
+
+		printf("\n\n");
+}
+
+
+
 
