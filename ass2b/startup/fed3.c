@@ -189,6 +189,7 @@ int main(int argc, char* argv[])
 
 	init_game(&thegame, argv[1]);
 
+/*
 	printf("%d ", thegame.tiledeck->num_tiles);
 	printf("\n");
 
@@ -202,6 +203,7 @@ int main(int argc, char* argv[])
 	}
 
 	printf("\n");
+*/
 	return 0;
 }
 

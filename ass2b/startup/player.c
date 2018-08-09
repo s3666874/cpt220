@@ -116,10 +116,19 @@ enum input_result init_player(struct player* curplayer, int playernum,
  **/
 enum input_result take_turn(struct player* curplayer, BOOLEAN isfirst)
 {
-		display_board(&thegame.theboard);
+		char a[20];
+		const struct board *theboard;
+
+		theboard = &curplayer->thegame->theboard;
+
+		display_board(theboard);
+
+		printf("It is %s's turn, their current score is %d, and their current hand is:\n", curplayer->name, curplayer->score);
+		fgets(a, 19, stdin);
+
 
         /* you'll need to allocate and free this on every turne */
-        return IR_FAILURE;
+        return IR_SUCCESS;
 }
 
 
