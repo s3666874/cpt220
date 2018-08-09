@@ -94,6 +94,7 @@ void play_game(struct word_list* dictionary, const char tilefile[])
 
         /* iterate over the players allowing each to have their turn until
          * someone quits */
+/*
         while (i=0, take_turn(&thegame.players[i], isfirst) == IR_SUCCESS)
         {
                 if (i == thegame.num_players-1)
@@ -102,22 +103,22 @@ void play_game(struct word_list* dictionary, const char tilefile[])
                 isfirst = FALSE;
                 i++;
         }
-
+*/
 
         /* print tiles */
-/*
+
         printf("\n");
 
         for (i=0; i<100; i++)
         {
-                printf("%c ", thegame.tiledeck->tiles[i].letter);
+                printf("[%c] ", thegame.tiledeck->tiles[i].letter);
 
-                if (i == 20 || i == 40 || i == 60 || i == 80)
+                if (i == 19 || i == 39 || i == 59 || i == 79)
                         printf("\n");
 
         }
         printf("\n");
-*/
+
         /* print players */
 /*
         for (i=0; i<thegame.num_players; i++)

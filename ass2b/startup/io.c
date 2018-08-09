@@ -253,7 +253,7 @@ BOOLEAN load_scores(const char fname[], struct tile_list* lettermap,
                 return FALSE;
         }
 
-        /*shuffle_tiles(temp, 100);*/
+        shuffle_tiles(temp, 100);
 
 
         lettermap->tiles = tmp;
