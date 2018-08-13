@@ -218,7 +218,11 @@ enum input_result take_turn(struct player* curplayer, BOOLEAN isfirst)
 		}
 
 		/* Validate the move */
-		is_valid_move(curplayer, word, location, &themove, isfirst);
+		if (!is_valid_move(curplayer, word, location, &themove, isfirst))
+		{
+				printf("Error: invalid move. Please try again.\n\n");
+				return IR_FAILURE;
+		}
 
 		/* Testing */
 		printf("%s\n", word);
