@@ -18,6 +18,10 @@ SOURCES=board.c game.c helpers.c io.c tile_list.c player.c rules.c scrabble.c \
 	word_list.c
 HEADERS=board.h game.h helpers.h io.h tile_list.h player.h rules.h scrabble.h \
 	shared.h word_list.h
+
+all: clean
+	gcc -ansi -Wall -pedantic ${SOURCES} -o scrabble
+
 archive:
 	zip ${USER} ${SOURCES} ${HEADERS} Makefile
 
@@ -26,3 +30,7 @@ build: clean
 
 clean:
 	rm -f *.out scrabble
+
+valgrind: clean
+	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./scrabble words.len tiles.txt
+

@@ -89,27 +89,33 @@ enum input_result init_game(struct game* thegame, struct word_list* dictionary,
  **/
 void play_game(struct word_list* dictionary, const char tilefile[])
 {
-        /*BOOLEAN isfirst = TRUE;*/
+        int i=0;
         struct game thegame;
+
+        BOOLEAN isfirst = TRUE;
 
         /* initialise the game */
         init_game(&thegame, dictionary, tilefile);
 
         /* iterate over the players allowing each to have their turn until
          * someone quits */
-/*
-        while (i=0, take_turn(&thegame.players[i], isfirst) == IR_SUCCESS)
+        while (take_turn(&thegame.players[i], isfirst) == IR_SUCCESS)
         {
                 if (i == thegame.num_players-1)
-                    i=0;
+                {
+                        i=0;
+                }
+                else
+                {
+                        i++;
+                }
 
                 isfirst = FALSE;
-                i++;
         }
-*/
+
 
         /* print tiles */
-        print_tiles(thegame.tiledeck->tiles, thegame.tiledeck->total_tiles);
+        /*print_tiles(thegame.tiledeck->tiles, thegame.tiledeck->total_tiles);*/
         /*print_tiles(thegame.tilemap->tiles, thegame.tilemap->total_tiles);*/
 
         /* print players */

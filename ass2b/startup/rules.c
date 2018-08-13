@@ -31,6 +31,18 @@ BOOLEAN is_valid_move(struct player* curplayer, char word[],
                       const char location[], struct move* themove,
                       BOOLEAN isfirst)
 {
+        /* Check length of word */
+
+		/* Check word is in dictionary */
+
+		/* Check coordinate is within the board */
+
+		/* Check user has the right letters (including the ones on the board) */
+
+		
+
+
+
         return FALSE;
 }
 

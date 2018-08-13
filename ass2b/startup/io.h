@@ -80,4 +80,6 @@ void print_finscores(struct game *);
 enum input_result get_string_from_keyboard(const char [], char *, int);
 
 enum input_result get_int_from_keyboard(const char [], int *, int);
+
+struct tile_list load_hand(struct tile_list *, int);
 #endif

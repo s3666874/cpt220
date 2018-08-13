@@ -1,74 +1,60 @@
-#include "stdio.h"
-#include "string.h"
-#include "stdlib.h"
-#include "time.h"
-#include <limits.h>
-
-struct Books {
-	int book_id;
-	char title[50];
-	char author[50];
-	char subject[100];
-};
-
-void printBook( struct Books book ) {
-  	printf("Book book_id : %d\n", book.book_id);
-   	printf("Book title : %s\n", book.title);
-   	printf("Book author : %s\n", book.author);
-   	printf("Book subject : %s\n", book.subject);
-}
-
-void printBook2( struct Books *book ) {
-   	printf("Book book_id : %d\n", book->book_id);
-   	printf("Book title : %s\n", book->title);
-   	printf("Book author : %s\n", book->author);
-   	printf("Book subject : %s\n", book->subject);
-}
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 
-cell getToken()
+char* cleanString(char s[])
 {
+    int i;
 
-    srand((unsigned) time(NULL));
-    
-    if (rand()%2 == 0)
-    {
-   		return C_WHITE; 	
-    }
+    i = strlen(s)-1;
+    if ( s[i] == '\n')
+    s[i] = '\0';
 
-   return C_RED;
+    return s;
+}
 
+void read_rest_of_line(void)
+{
+    int ch;
+    /* read each char in the input buffer until we run out of chars to read
+     */
+    while (ch = getc(stdin), ch != '\n' && ch != EOF)
+            ;
+    /* clear the error status on the stdin FILE pointer */
+    clearerr(stdin);
 }
 
 int main(void)
 {
+    int tuna = 19;
+    char str[3];
+    char *ptr;
+    long ret=0;
 
-	/*
-	struct Books book1;
+/*
+    printf("tuna: %d\n", tuna);
+    printf("&tuna: %p\n", &tuna);
+    printf("*&tuna: %d\n", *&tuna);
+	printf("tuna: %d\n", tuna);
 
-	book1.book_id = 6495407;
-	strcpy(book1.title, "C Programming");
-	strcpy(book1.author, "Nuha Ali"); 
-	strcpy(book1.subject, "C Programming Tutorial");
-
-	printBook(book1);
-	printf("\n\n");
-	printBook2(&book1);
-
-	strcpy(book1.author, "Federick Kwok"); 
-
-	printf("\n\n");
-	printBook2(&book1);
+    *&tuna = 23;
+    printf("tuna: %d\n", tuna);
 */
+    
+    printf("Please enter something: ");
+    fgets(str, 3, stdin);
 
+    if (str[strlen(str) - 1] != '\n')
+    {
+        read_rest_of_line();
+    }
+    else
+    {
+        ret = strtol(cleanString(str), &ptr, 10);
+    }
 
-	printf("%d\n", getToken());
+    printf("%ld\n", ret);
 
-
-
-
-	/* asdfadf */
-	/* asdfadf */
-
-	return 0;
+    return 0;
 }

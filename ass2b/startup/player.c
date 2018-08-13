@@ -40,10 +40,20 @@ enum color get_next_available_color(int used_colors[])
 
 		srand(time(NULL));
 
-		while (color = rand() % 8, color == C_INVALID || !is_color_available(used_colors, color))
+		while (color = rand() % 6, color == C_INVALID || !is_color_available(used_colors, color))
 				;
 
 		return color;
+}
+
+long int getint2(char* str)
+{
+        char *ptr;
+        long ret;
+
+        ret = strtol(str, &ptr, 10);
+
+        return ret;
 }
 
 
@@ -98,9 +108,12 @@ enum input_result init_player(struct player* curplayer, int playernum,
 		curplayer->color = color;
 		curplayer->thegame = thegame;
 
+		curplayer->hand = load_hand(thegame->tiledeck, 7);
+
 		free(str);
         return IR_SUCCESS;
 }
+
 
 /**
  * This is the function that implements each player turn. Firstly, the word to
@@ -114,18 +127,107 @@ enum input_result init_player(struct player* curplayer, int playernum,
  * Next, use the functions implemented in the rules module to validate
  * and apply the changes to the board.
  **/
+
 enum input_result take_turn(struct player* curplayer, BOOLEAN isfirst)
 {
-		char a[20];
+		int c=1,i;
+    	char *token;
+		char *word;
+		char prompt[1000];
 		const struct board *theboard;
+		char *location = malloc(7 * sizeof(char));
+		struct move themove;
+    	const char s[2] = ":";
 
 		theboard = &curplayer->thegame->theboard;
+		i = (theboard->boardsize > 9) ? 7 : 5;
+		word = malloc(theboard->boardsize * sizeof(char));
 
+		/* Display the board in the current state */
 		display_board(theboard);
 
-		printf("It is %s's turn, their current score is %d, and their current hand is:\n", curplayer->name, curplayer->score);
-		fgets(a, 19, stdin);
+		if (curplayer->color == 0)
+		{
+				printf("It is %s%s's%s turn, their current score is %d, and their current hand is:\n", COLOR_RED, curplayer->name, COLOR_RESET, curplayer->score);
+		}
+		else if (curplayer->color == 1)
+		{
+				printf("It is %s%s's%s turn, their current score is %d, and their current hand is:\n", COLOR_GREEN, curplayer->name, COLOR_RESET, curplayer->score);
+		}
+		else if (curplayer->color == 2)
+		{
+				printf("It is %s%s's%s turn, their current score is %d, and their current hand is:\n", COLOR_YELLOW, curplayer->name, COLOR_RESET, curplayer->score);
+		}
+		else if (curplayer->color == 3)
+		{
+				printf("It is %s%s's%s turn, their current score is %d, and their current hand is:\n", COLOR_BLUE, curplayer->name, COLOR_RESET, curplayer->score);
+		}
+		else if (curplayer->color == 4)
+		{
+				printf("It is %s%s's%s turn, their current score is %d, and their current hand is:\n", COLOR_MAGENTA, curplayer->name, COLOR_RESET, curplayer->score);
+		}
+		else if (curplayer->color == 5)
+		{
+				printf("It is %s%s's%s turn, their current score is %d, and their current hand is:\n", COLOR_CYAN, curplayer->name, COLOR_RESET, curplayer->score);
+		}
 
+		/* Print the current players hand */
+		print_hand(&curplayer->hand);
+
+		/* Ask the current player to enter a word */
+		sprintf(prompt, "Please enter a word to play, at most %d characters: ", theboard->boardsize);
+
+		do {
+				get_string_from_keyboard(prompt, word, theboard->boardsize+1);
+		} while (strlen(word) > theboard->boardsize);
+
+
+		/* Ask the current player for the location they want place the word on the board */
+		sprintf(prompt, "Please enter the starting location for the word in the format x:y:d where x and\ny are the row and column the word starts and d is the direction - either h for\nhorizontal or v for vertical: ");
+
+		do {
+				get_string_from_keyboard(prompt, location, i+1);
+		} while (strlen(location) > i);
+
+		token = strtok(location, s);
+
+		while(token != NULL)
+		{
+				if (c == 1)
+				{
+						themove.x = getint2(token);
+				}
+				else if (c == 2)
+				{
+						themove.y = getint2(token);
+				}
+				else if (c == 3)
+				{
+						if (strcmp(token, "h") == 0)
+						{
+								themove.dir = 0;
+						}
+						else
+						{
+								themove.dir = 1;
+						}
+				}
+
+				token = strtok(NULL, s);
+				c++;
+		}
+
+		/* Validate the move */
+		is_valid_move(curplayer, word, location, &themove, isfirst);
+
+		/* Testing */
+		printf("%s\n", word);
+		printf("%s\n", location);
+		printf("%d,%d,%d\n", themove.x, themove.y, themove.dir);
+
+		/* Free up memory */
+		free(word);
+		free(location);
 
         /* you'll need to allocate and free this on every turne */
         return IR_SUCCESS;
@@ -200,6 +302,7 @@ void print_players(struct player *players, int num_players)
                 printf("\n");
         }
 }
+
 
 
 

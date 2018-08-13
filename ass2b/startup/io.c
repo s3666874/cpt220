@@ -163,7 +163,7 @@ BOOLEAN load_word_list(const char fname[], struct word_list* wordlist)
                         copy = malloc(strlen(str)+1);
                         strcpy(copy, str);
                         word_list_add(wordlist, upper(cleanString(copy)));
-                        /*free(copy);*/
+                        free(copy);
                 }
 
                 /*free(copy);*/
@@ -253,40 +253,26 @@ BOOLEAN load_scores(const char fname[], struct tile_list* lettermap,
                 return FALSE;
         }
 
-        /*print_tiles(temp, 100);*/
+        /* Shuffle deck */
         shuffle_tiles(temp, 100);
-        /*print_tiles(temp, 100);*/
 
         /* Setting up lettermap */
         lettermap->num_tiles = 0;
         lettermap->total_tiles = 27;
+        lettermap->tiles = malloc(27 * sizeof(struct tile));
 
         /* Setting up the fulllist */
         fulllist->num_tiles = 0;
         fulllist->total_tiles = 100;
+        fulllist->tiles = malloc(100 * sizeof(struct tile));
 
-
-        /**************************** Option 1 - Only one that works ****************************/
-        lettermap->tiles = tmp;
-        fulllist->tiles = temp;
-
-
-        /**************************** Option 2 - We get funny characters ****************************/
-        /*lettermap->tiles = tmp;
-        fulllist->tiles = temp;
-
-        free(tmp);
-        free(temp);*/
-
-        /**************************** Option 3 - Segmentation fault ****************************/
-        /*memcpy(lettermap->tiles, tmp, 27 * sizeof(struct tile));
+        /* Copy the array of struct over */
+        memcpy(lettermap->tiles, tmp, 27 * sizeof(struct tile));
         memcpy(fulllist->tiles, temp, 100 * sizeof(struct tile));
 
+        /* free up temps */
         free(tmp);
-        free(temp);*/
-
-
-        /*print_tiles(fulllist->tiles, 100);*/
+        free(temp);
 
         return TRUE;
 }
@@ -340,6 +326,18 @@ void display_board(const struct board* theboard)
  **/
 void print_hand(struct tile_list* curhand)
 {
+        int i;
+
+        PUTLINE('=', 28);
+
+        for (i=0; i<7; i++)
+        {
+                printf("| %c ", curhand->tiles[i].letter);
+        }
+
+        printf("|\n");
+        PUTLINE('=', 28);
+        printf("\n");
 }
 
 /**
@@ -381,3 +379,30 @@ int error_print(const char format[], ...)
 void print_finscores(struct game* thegame)
 {
 }
+
+struct tile_list load_hand(struct tile_list *tiledeck, int howmany)
+{
+        int i,j=0;
+        struct tile_list hand;
+        struct tile *tiles = malloc(7 * sizeof(struct tile));
+
+        for (i=0; i<howmany; i++)
+        {
+                tiles[i] = tiledeck->tiles[i];
+        }
+
+        for (i=howmany; i<100; i++)
+        {
+                tiledeck->tiles[j] = tiledeck->tiles[i];
+                j++;
+        }
+
+        hand.tiles = tiles;
+        hand.num_tiles = 0;
+        hand.total_tiles = 7;
+
+        return hand;
+}
+
+
+
