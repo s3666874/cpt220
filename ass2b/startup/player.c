@@ -9,6 +9,7 @@
 
 #include "player.h"
 #include "game.h"
+#include "helpers.h"
 #include <time.h>
 
 /******************************************************************************
@@ -44,16 +45,6 @@ enum color get_next_available_color(int used_colors[])
 				;
 
 		return color;
-}
-
-long int getint2(char* str)
-{
-        char *ptr;
-        long ret;
-
-        ret = strtol(str, &ptr, 10);
-
-        return ret;
 }
 
 
@@ -146,30 +137,7 @@ enum input_result take_turn(struct player* curplayer, BOOLEAN isfirst)
 		/* Display the board in the current state */
 		display_board(theboard);
 
-		if (curplayer->color == 0)
-		{
-				printf("It is %s%s's%s turn, their current score is %d, and their current hand is:\n", COLOR_RED, curplayer->name, COLOR_RESET, curplayer->score);
-		}
-		else if (curplayer->color == 1)
-		{
-				printf("It is %s%s's%s turn, their current score is %d, and their current hand is:\n", COLOR_GREEN, curplayer->name, COLOR_RESET, curplayer->score);
-		}
-		else if (curplayer->color == 2)
-		{
-				printf("It is %s%s's%s turn, their current score is %d, and their current hand is:\n", COLOR_YELLOW, curplayer->name, COLOR_RESET, curplayer->score);
-		}
-		else if (curplayer->color == 3)
-		{
-				printf("It is %s%s's%s turn, their current score is %d, and their current hand is:\n", COLOR_BLUE, curplayer->name, COLOR_RESET, curplayer->score);
-		}
-		else if (curplayer->color == 4)
-		{
-				printf("It is %s%s's%s turn, their current score is %d, and their current hand is:\n", COLOR_MAGENTA, curplayer->name, COLOR_RESET, curplayer->score);
-		}
-		else if (curplayer->color == 5)
-		{
-				printf("It is %s%s's%s turn, their current score is %d, and their current hand is:\n", COLOR_CYAN, curplayer->name, COLOR_RESET, curplayer->score);
-		}
+		printf("It is %s%s's%s turn, their current score is %d, and their current hand is:\n", color_strings[curplayer->color], curplayer->name, COLOR_RESET, curplayer->score);
 
 		/* Print the current players hand */
 		print_hand(&curplayer->hand);
@@ -181,6 +149,12 @@ enum input_result take_turn(struct player* curplayer, BOOLEAN isfirst)
 				get_string_from_keyboard(prompt, word, theboard->boardsize+1);
 		} while (strlen(word) > theboard->boardsize);
 
+		if (strlen(word) == 0)
+		{
+				free(word);
+				free(location);
+				return IR_RTM;
+		}
 
 		/* Ask the current player for the location they want place the word on the board */
 		sprintf(prompt, "Please enter the starting location for the word in the format x:y:d where x and\ny are the row and column the word starts and d is the direction - either h for\nhorizontal or v for vertical: ");
@@ -189,17 +163,24 @@ enum input_result take_turn(struct player* curplayer, BOOLEAN isfirst)
 				get_string_from_keyboard(prompt, location, i+1);
 		} while (strlen(location) > i);
 
+		if (strlen(location) == 0)
+		{
+				free(word);
+				free(location);
+				return IR_RTM;
+		}
+
 		token = strtok(location, s);
 
 		while(token != NULL)
 		{
 				if (c == 1)
 				{
-						themove.x = getint2(token);
+						themove.x = getint(token);
 				}
 				else if (c == 2)
 				{
-						themove.y = getint2(token);
+						themove.y = getint(token);
 				}
 				else if (c == 3)
 				{
@@ -225,9 +206,12 @@ enum input_result take_turn(struct player* curplayer, BOOLEAN isfirst)
 		}
 
 		/* Testing */
-		printf("%s\n", word);
+		/*printf("%s\n", word);
 		printf("%s\n", location);
-		printf("%d,%d,%d\n", themove.x, themove.y, themove.dir);
+		printf("%d,%d,%d\n", themove.x, themove.y, themove.dir);*/
+
+		/* apply the move */
+		apply_move(curplayer, &themove, word);
 
 		/* Free up memory */
 		free(word);
@@ -307,6 +291,22 @@ void print_players(struct player *players, int num_players)
         }
 }
 
+BOOLEAN is_letter_in_player_hand(int letter, struct player* curplayer)
+{
+		int i;
+		BOOLEAN success = FALSE;
+
+		for (i=0; i<7; i++)
+		{
+				if (curplayer->hand.tiles[i].letter == letter)
+				{
+						success = TRUE;
+						break;
+				}
+		}
+
+		return success;
+}
 
 
 

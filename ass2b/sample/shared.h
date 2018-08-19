@@ -1,7 +1,7 @@
 /******************************************************************************
- * Student Name    : Federick Kwok
- * RMIT Student ID : s3666874
- * COURSE CODE     : CPT220
+ * Student Name    :
+ * RMIT Student ID :
+ * COURSE CODE     :
  *
  * Startup code provided by Paul Miller for use in "Programming in C",
  * study period 2, 2018.
@@ -32,7 +32,5 @@ enum color
         C_RESET,
         C_INVALID
 };
-
-
 #define SPACE ' '
 #endif

@@ -39,11 +39,14 @@ enum input_result init_game(struct game* thegame, struct word_list* dictionary,
 {
         int *str = malloc((21) * sizeof(char));
         enum input_result status;
+        enum input_result result;
 
         struct tile_list lettermap;
         struct tile_list fulllist;
 
         struct board theboard;
+
+        BOOLEAN success = FALSE;
 
         /* load the scores into tilemap and tiledeck respectively */
         if (!load_scores(tile_file, &lettermap, &fulllist))
@@ -61,17 +64,48 @@ enum input_result init_game(struct game* thegame, struct word_list* dictionary,
         /*print_tiles(thegame->tiledeck->tiles, 100);*/
 
         /* grab the number of players from the user */
-		if (get_int_from_keyboard("How many players should play? ", str, 1) == IR_SUCCESS)
-		{
-				thegame->num_players = *str;
-                thegame->allwords = dictionary;
-				thegame->players = new_players(*str, thegame, &status);
-		}
-
-        if (get_int_from_keyboard("How wide and high should the board be? The minimum is 5 and the maximum is 15: ", str, 2) == IR_SUCCESS)
+        while (!success)
         {
+                while (result = get_int_from_keyboard("How many players should play? ", str, 1), result == IR_FAILURE)
+                {
+                        if (result == IR_RTM)
+                                success = FALSE;
+                }
+
+                if (*str > MAX_PLAYERS)
+                {
+                        printf("Error: invalid number of players. Please try again.\n");
+                        continue;
+                }
+
+                thegame->num_players = *str;
+                thegame->allwords = dictionary;
+                thegame->players = new_players(*str, thegame, &status);
+
+                success = TRUE;
+        }
+
+        /* reset flag */
+        success = FALSE;
+
+        while (!success)
+        {
+                while (result = get_int_from_keyboard("How wide and high should the board be? The minimum is 5 and the maximum is 15: ", str, 2), result == IR_FAILURE)
+                {
+                        if (result == IR_RTM)
+                                success = FALSE;
+                }
+
+                if (*str < MIN_BOARD_SIZE || *str > MAX_BOARD_SIZE)
+                {
+                        printf("Error: boardsize outside the allowed range. Please try again.\n");
+                        continue;
+                }
+
                 theboard = init_board(*str);
                 thegame->theboard = theboard;
+
+                success = TRUE;
         }
 
         free(str);
@@ -115,15 +149,11 @@ void play_game(struct word_list* dictionary, const char tilefile[])
 
                         isfirst = FALSE;
                 }
+                else if (result == IR_RTM)
+                {
+                        break;
+                }
         }
-
-
-        /* print tiles */
-        /*print_tiles(thegame.tiledeck->tiles, thegame.tiledeck->total_tiles);*/
-        /*print_tiles(thegame.tilemap->tiles, thegame.tilemap->total_tiles);*/
-
-        /* print players */
-        /*print_players(thegame.players, thegame.num_players);*/
 
         /* finalise the scores and print them */
 
@@ -137,4 +167,31 @@ void play_game(struct word_list* dictionary, const char tilefile[])
  **/
 void free_game(struct game* thegame)
 {
+        int i;
+
+        /* free players */
+        free(thegame->players);
+
+        /* free matrix */
+        for (i=1; i <= thegame->theboard.boardsize; i++)
+        {
+                /*for (j=1; j <= thegame->theboard.boardsize; j++)
+                {
+                        free(thegame->theboard.matrix[i][j]);
+                }*/
+
+                free(thegame->theboard.matrix[i]);
+        }
+
+        /* free word_list 
+        free_word_list(thegame->allwords);*/
+
+        /* free tile_list 
+        free(thegame->tilemap->tiles);
+        free(thegame->tiledeck->tiles);*/
 }
+
+
+
+
+

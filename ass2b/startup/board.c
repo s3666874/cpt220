@@ -22,15 +22,29 @@ struct board init_board(int boardsize)
 		theboard.boardsize = boardsize;
 		theboard.matrix = malloc(boardsize * sizeof(struct cell));
 
-		for (i=0; i < boardsize; ++i)
+		for (i=1; i <= boardsize; i++)
 		{
 				theboard.matrix[i] = malloc(boardsize * sizeof(struct cell));
 
-				for (j=0; j < boardsize; ++j)
+				for (j=1; j <= boardsize; j++)
 				{
-						theboard.matrix[i][j].letter = 'A';
+						theboard.matrix[i][j].letter = 'a';
+						theboard.matrix[i][j].color = 1;
 				}
 		}
 
 		return theboard;
+}
+
+void show_board(struct board *theboard)
+{
+		int i,j;
+
+		for (i=1; i <= theboard->boardsize; i++)
+		{
+				for (j=1; j <= theboard->boardsize; j++)
+				{
+						printf("%c [%d,%d]\n", theboard->matrix[i][j].letter, i, j);
+				}
+		}
 }

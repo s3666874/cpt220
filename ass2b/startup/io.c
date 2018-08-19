@@ -10,6 +10,7 @@
 #include "io.h"
 #include "tile_list.h"
 #include "game.h"
+#include "helpers.h"
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -36,17 +37,6 @@ void read_rest_of_line(void)
         while (ch = getc(stdin), ch != '\n' && ch != EOF)
                 ;
         clearerr(stdin);
-}
-
-char* cleanString(char s[])
-{
-        int i;
-
-        i = strlen(s)-1;
-        if ( s[i] == '\n')
-        s[i] = '\0';
-
-        return s;
 }
 
 enum input_result get_string_from_keyboard(const char prompt[], char *output, int len)
@@ -114,30 +104,6 @@ enum input_result get_int_from_keyboard(const char prompt[], int *output, int le
 }
 
 
-char * upper(char * temp) {
-        char * name = temp;
-        char *s = name;
-
-        while (*s)
-        {
-                *s = toupper((unsigned char) *s);
-                s++;
-        }
-
-        return name;
-}
-
-long int getint(char* str)
-{
-        char *ptr;
-        long ret;
-
-        ret = strtol(str, &ptr, 10);
-
-        return ret;
-}
-
-
 /**
  * loads the word list (dictionary of allowed words) into a linked list of
  * words. You should open the file then read in each line into a node in
@@ -163,7 +129,7 @@ BOOLEAN load_word_list(const char fname[], struct word_list* wordlist)
                         copy = malloc(strlen(str)+1);
                         strcpy(copy, str);
                         word_list_add(wordlist, upper(cleanString(copy)));
-                        free(copy);
+                        /*free(copy);*/
                 }
 
                 /*free(copy);*/
@@ -307,7 +273,14 @@ void display_board(const struct board* theboard)
                         }
                         else
                         {
-                                printf("    |");
+                                if (theboard->matrix[i][j+1].letter >= 65 && theboard->matrix[i][j+1].letter <= 90)
+                                {
+                                        printf("  %s%c%s |", color_strings[theboard->matrix[i][j+1].color], theboard->matrix[i][j+1].letter, COLOR_RESET);
+                                }
+                                else
+                                {
+                                        printf("    |");
+                                }
                         }
 
                 }

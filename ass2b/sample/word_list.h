@@ -1,7 +1,7 @@
 /******************************************************************************
- * Student Name    : Federick Kwok
- * RMIT Student ID : s3666874
- * COURSE CODE     : CPT220
+ * Student Name    :
+ * RMIT Student ID :
+ * COURSE CODE     :
  *
  * Startup code provided by Paul Miller for use in "Programming in C",
  * study period 2, 2018.
@@ -25,8 +25,8 @@
  **/
 struct word_node
 {
-        const char* word;
-        struct word_node *next;
+        char* word;
+        struct word_node* next;
 };
 
 /**
@@ -35,18 +35,12 @@ struct word_node
  **/
 struct word_list
 {
-        struct word_node *head;
+        struct word_node* head;
         int len;
 };
 
 /* publicly callable functions from this module */
-void word_list_init(struct word_list *);
-
-void word_list_add(struct word_list *, const char []);
-
-void display_all(struct word_list *);
-
-void free_word_list(struct word_list *);
-
-BOOLEAN is_word_in_list(struct word_list *, const char []);
+BOOLEAN wl_init(struct word_list*);
+BOOLEAN wl_add(struct word_list*, const char[]);
+void wl_free(struct word_list*);
 #endif

@@ -54,9 +54,10 @@ int main(int argc, char* argv[])
         /* output the seed being used */
         printf("Using seed %u\n", seed);
 
-        /* load the dictionary file */
+        
         word_list_init(&wordlist);
 
+        /* load the dictionary file */
         if (!load_word_list(argv[1], &wordlist))
         {
                 printf("Failed to load the dictionary.\n");

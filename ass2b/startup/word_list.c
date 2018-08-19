@@ -69,7 +69,37 @@ void display_all(struct word_list *list)
 		}
 }
 
+BOOLEAN is_word_in_list(struct word_list *list, const char word[])
+{
+		BOOLEAN is_in_list = FALSE;
+		struct word_node *cursor = list->head;
 
+		while(cursor != NULL)
+		{
+				if (strcmp(cursor->word, word) == 0)
+				{
+						is_in_list = TRUE;
+						break;
+				}
+
+				cursor = cursor->next;
+		}
+
+		return is_in_list;
+}
+
+void free_word_list(struct word_list *list)
+{
+		struct word_node *cursor = list->head;
+		struct word_node *tmp;
+
+		while(cursor != NULL)
+		{	
+				tmp = cursor;
+				cursor = cursor->next;
+				free(tmp);
+		}
+}
 
 
 /******************************************************************************

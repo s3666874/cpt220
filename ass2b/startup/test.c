@@ -3,6 +3,12 @@
 #include <stdlib.h>
 #include <ctype.h>
 
+typedef enum
+{
+	FALSE,
+	TRUE
+} BOOLEAN;
+
 char* cleanString(char s[])
 {
     int i;
@@ -105,6 +111,25 @@ char * upper(char * temp) {
 	return name;
 }
 
+BOOLEAN is_word_in_list(struct word_list *list, const char word[])
+{
+	BOOLEAN is_in_list = FALSE;
+	struct word_node *cursor = list->head;
+
+	while(cursor != NULL)
+	{
+		if (strcmp(cursor->word, word) == 0)
+		{
+			is_in_list = TRUE;
+			break;
+		}
+
+		cursor = cursor->next;
+	}
+
+	return is_in_list;
+}
+
 /* Populating the linked list manually */
 /*
 int main(void)
@@ -168,6 +193,7 @@ int main(int argc, char* argv[])
 
 int main(int argc, char* argv[])
 {
+	char word[15] = "feder";
 	char str[MAX_WORD_LEN+1];
 	char *copy = malloc(strlen(str)+1);
 	struct word_list wordlist;
@@ -200,7 +226,8 @@ int main(int argc, char* argv[])
 		return 0;
 	}
 
-	display_all(&wordlist);
+	if (is_word_in_list(&wordlist, upper(word)))
+		display_all(&wordlist);
 
 	return 1;
 }
